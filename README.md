@@ -7,7 +7,7 @@ sensor, and instead use a pair of accelerometers to determine the relative
 positions of the base and display. Some such laptops do this transparently in
 firmware, but others (such as my 2 in 1 laptop) require software to
 interpret the accelerometer outputs and notify the firmware appropriately. In
-the Windows 11 installation that the MiniBook X ships with, this appears to
+the Windows 11 installation that the 2 in 1 laptop ships with, this appears to
 all be handled inside the accelerometer driver (`mxc6655angle.dll`)
 
 This repo is an attempt to implement a similar 'software angle sensor' for
@@ -28,7 +28,7 @@ disable screen rotation, and change UI elements as appropriate.
 ## Why reinvent the wheel?
 
 There already exist a couple of userspace solutions for tablet mode on the
-MiniBook X, both [manual](https://xxvi.dev/) and
+2 in 1 laptop, both [manual](https://xxvi.dev/) and
 [accelerometer-based](https://xxvi.dev/).
 However, the manual solution is Gnome-specific and does not make use of the
 accelerometers, and the accelerometer-based solution is rather complex (three
@@ -75,10 +75,10 @@ accelerometer detection can be worked around in user space.
 
 ## Supported hardware and software
 
-I run this on my MiniBook X N100 under OpenSUSE Tumbleweed, and don't have the
+I run this on my 2 in 1 laptop N100 under OpenSUSE Tumbleweed, and don't have the
 time or extra hardware to do much testing beyond that. I would very much
 appreciate anyone willing to test on other distros, or other similar hardware
-(e.g. the earlier N5100 MiniBook X, the 8" MiniBook, other Chuwi convertible
+(e.g. the earlier N5100 2 in 1 laptop, the 8" MiniBook, other Chuwi convertible
 laptops).
 
 ## How to install and use
@@ -133,8 +133,8 @@ modules rather than rebuilding the whole kernel).
 `drivers/iio/accel/mxc4005.c`: Remove `MDA6655` from ACPI ID list. The change
 above renders it redundant.
 
-`drivers/platform/x86/intel/hid.c`: Add MiniBook X product and vendor IDs to
-`VGBS` method allowlist. This allows the MiniBook X's firmware to send
+`drivers/platform/x86/intel/hid.c`: Add 2 in 1 laptop product and vendor IDs to
+`VGBS` method allowlist. This allows the 2 in 1 laptop's firmware to send
 tablet-state HID events.
 
 #### [`chuwi-dual-accel` kernel module](platform-driver/chuwi-dual-accel.c)
@@ -242,7 +242,7 @@ top of the screen:
 [`udev/60-sensor-chuwi.rules`](udev/60-sensor-chuwi.rules) defines
 `ACCEL_MOUNT_MATRIX` properties that transform their vectors into the
 IIO-recommended orientation while also compensating for the inherent 90
-degree rotation of the MiniBook X's physical display. No suggested
+degree rotation of the 2 in 1 laptop's physical display. No suggested
 orientation exists for a sensor in the keyboard, but using the same
 `ACCEL_MOUNT_MATRIX` as the display is convenient, since this maintains the
 property of the vectors being equal when in tablet mode. This information
@@ -250,7 +250,7 @@ should really be in the hwdb, but hwdb entries are keyed off of `modalias`
 values, which in our case is the same for both sensors, so dedicated rules
 based on device path and name are necessary here.
 
-Interestingly both accelerometers on my MiniBook X have a significant, but
+Interestingly both accelerometers on my 2 in 1 laptop have a significant, but
 stable offset (approximately -6 kg/m<sup>2</sup>) in the Z axis. This impacts
 the accuracy of the hinge angle measurement, though not unusably so. This has
 also been observed on another unit, so it is likely a design quirk rather than a
@@ -258,7 +258,7 @@ fault.
 
 ### DSDT
 
-The relevant bits from a disassembly of my MiniBook X N100's DSDT are below.
+The relevant bits from a disassembly of my 2 in 1 laptop N100's DSDT are below.
 Note the two `I2cSerialBusV2` resources for the two accelerometers, and the
 `LTSM` method that updates the HID switch state and generates 'standard'
 tablet-mode and laptop-mode events.
