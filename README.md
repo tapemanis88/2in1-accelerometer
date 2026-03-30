@@ -1,11 +1,11 @@
-# Dual-accelerometer tablet-mode switching for the Chuwi MiniBook X
+# Dual-accelerometer tablet-mode switching for the 2 in 1 laptop
 
 ## Introduction
 
 A number of 2-in-1 convertible laptops today lack a hardware hinge-position
 sensor, and instead use a pair of accelerometers to determine the relative
 positions of the base and display. Some such laptops do this transparently in
-firmware, but others (such as my Chuwi MiniBook X) require software to
+firmware, but others (such as my 2 in 1 laptop) require software to
 interpret the accelerometer outputs and notify the firmware appropriately. In
 the Windows 11 installation that the MiniBook X ships with, this appears to
 all be handled inside the accelerometer driver (`mxc6655angle.dll`)
